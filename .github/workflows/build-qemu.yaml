@@ -1,0 +1,27 @@
+name: CI
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        arch: [amd64, arm64]
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v3
+    - name: Build
+      run: |
+        git clone --depth=1 https://github.com/gardenlinux/gardenlinux
+        cd gardenlinux
+        ./build kvm_curl-${{ matrix.arch }}
+    - uses: actions/upload-artifact@v4
+      with:
+        name: gl-qemu-${{ matrix.arch }}
+        path: gardenlinux/.build/*raw
