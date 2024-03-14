@@ -18,7 +18,7 @@ jobs:
       uses: docker/setup-qemu-action@v3
     - name: Build
       run: |
-        git clone --depth=1 https://github.com/gardenlinux/gardenlinux
+        git clone --depth=1 --branch=1443.0 https://github.com/gardenlinux/gardenlinux
         cd gardenlinux
         ./build kvm_curl-${{ matrix.arch }}
     - uses: actions/upload-artifact@v4
