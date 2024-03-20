@@ -46,7 +46,11 @@ jobs:
       run: |
         git config --global user.name 'github-actions[bot]'
         git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-        git clone --depth=1 --branch=${{ matrix.version }} https://github.com/gardenlinux/gardenlinux
+        if [[ ${{ matrix.version }} == today ]]; then
+          git clone --depth=1 https://github.com/gardenlinux/gardenlinux
+        else
+          git clone --depth=1 --branch=${{ matrix.version }} https://github.com/gardenlinux/gardenlinux
+        fi
         cd gardenlinux
         echo ${{ matrix.version }} > VERSION
         git commit -am "Version ${{ matrix.version }}"
