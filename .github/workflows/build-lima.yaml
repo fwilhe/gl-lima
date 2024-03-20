@@ -46,10 +46,10 @@ jobs:
       run: |
         git config --global user.name 'github-actions[bot]'
         git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-        git clone --depth=1 --branch={{ matrix.version }} https://github.com/gardenlinux/gardenlinux
+        git clone --depth=1 --branch=${{ matrix.version }} https://github.com/gardenlinux/gardenlinux
         cd gardenlinux
-        echo {{ matrix.version }} > VERSION
-        git commit -am "Version {{ matrix.version }}"
+        echo ${{ matrix.version }} > VERSION
+        git commit -am "Version ${{ matrix.version }}"
         ./build kvm_curl-lima-${{ matrix.arch }}
     - uses: actions/upload-artifact@v4
       with:
