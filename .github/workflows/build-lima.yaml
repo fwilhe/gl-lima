@@ -57,5 +57,5 @@ jobs:
         ./build kvm_curl-lima-${{ matrix.arch }}
     - uses: actions/upload-artifact@v4
       with:
-        name: gl-lima-${{ matrix.arch }}
+        name: gl-lima-${{ matrix.version }}-${{ matrix.arch }}
         path: gardenlinux/.build/*qcow2
