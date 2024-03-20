@@ -52,8 +52,12 @@ jobs:
           git clone --depth=1 --branch=${{ matrix.version }} https://github.com/gardenlinux/gardenlinux
         fi
         cd gardenlinux
-        echo ${{ matrix.version }} > VERSION
-        git commit -am "Version ${{ matrix.version }}"
+        if [[ ${{ matrix.version }} == today ]]; then
+          echo no need to change version
+        else
+          echo ${{ matrix.version }} > VERSION
+          git commit -am "Version ${{ matrix.version }}"
+        fi
         ./build kvm_curl-lima-${{ matrix.arch }}
     - uses: actions/upload-artifact@v4
       with:
